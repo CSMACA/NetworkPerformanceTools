@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- COLOR PALLETTE FOUND AT
+	http://paletton.com/#uid=50f0u0ky9H+kdMiq3JuHfuxHUnD
+
+	or
+
+
+*** Primary color:
+
+   shade 0 = #FF4900 = rgb(255, 73,  0) = rgba(255, 73,  0,1) = rgb0(1,0.286,0)
+   shade 1 = #FF8C5E = rgb(255,140, 94) = rgba(255,140, 94,1) = rgb0(1,0.549,0.369)
+   shade 2 = #FF6A2F = rgb(255,106, 47) = rgba(255,106, 47,1) = rgb0(1,0.416,0.184)
+   shade 3 = #F34500 = rgb(243, 69,  0) = rgba(243, 69,  0,1) = rgb0(0.953,0.271,0)
+   shade 4 = #BC3600 = rgb(188, 54,  0) = rgba(188, 54,  0,1) = rgb0(0.737,0.212,0)
+
+*** Secondary color (1):
+
+   shade 0 = #FF9200 = rgb(255,146,  0) = rgba(255,146,  0,1) = rgb0(1,0.573,0)
+   shade 1 = #FFBA5E = rgb(255,186, 94) = rgba(255,186, 94,1) = rgb0(1,0.729,0.369)
+   shade 2 = #FFA62F = rgb(255,166, 47) = rgba(255,166, 47,1) = rgb0(1,0.651,0.184)
+   shade 3 = #F38B00 = rgb(243,139,  0) = rgba(243,139,  0,1) = rgb0(0.953,0.545,0)
+   shade 4 = #BC6C00 = rgb(188,108,  0) = rgba(188,108,  0,1) = rgb0(0.737,0.424,0)
+
+*** Secondary color (2):
+
+   shade 0 = #EF0048 = rgb(239,  0, 72) = rgba(239,  0, 72,1) = rgb0(0.937,0,0.282)
+   shade 1 = #F35988 = rgb(243, 89,136) = rgba(243, 89,136,1) = rgb0(0.953,0.349,0.533)
+   shade 2 = #F02D68 = rgb(240, 45,104) = rgba(240, 45,104,1) = rgb0(0.941,0.176,0.408)
+   shade 3 = #D90042 = rgb(217,  0, 66) = rgba(217,  0, 66,1) = rgb0(0.851,0,0.259)
+   shade 4 = #A80033 = rgb(168,  0, 51) = rgba(168,  0, 51,1) = rgb0(0.659,0,0.2)
+ -->
+
+<resources>
+    <!-- LIGHT THEME -->
+    <color name="colorPrimary">#FF4900</color>
+    <color name="colorPrimaryDark">#BC3600</color>
+    <color name="colorAccent">#F02D68</color>
+    <color name="colorAccentRipple">#FF9AE2</color>
+    <color name="colorBackground">#C7BEBE</color>
+
+    <!-- DARK THEME -->
+    <color name="colorPrimaryD">#464646</color>
+    <color name="colorPrimaryDarkD">#282828</color>
+    <color name="colorAccentD">#969696</color>
+    <color name="colorBackgroundD">#141414</color>
+</resources>

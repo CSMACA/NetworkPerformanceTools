@@ -1,5 +1,6 @@
 package com.example.networkperformancetools
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -7,7 +8,10 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+
+const val DEV_EMAIL_RESPONSE = 1
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,6 +21,11 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
 
+        bugButton()
+
+    }
+
+    private fun bugButton(){
         //Handles bug report button.
         val sendToDev = Intent(Intent.ACTION_SENDTO)
         fab.setOnClickListener {
@@ -26,13 +35,22 @@ class MainActivity : AppCompatActivity() {
                 putExtra(Intent.EXTRA_SUBJECT, "Bug Report")
             }
             try {
-                startActivityForResult(sendToDev, 1)
-            } catch (e: ActivityNotFoundException) {
-
-            }
+                startActivityForResult(sendToDev, DEV_EMAIL_RESPONSE)
+            } catch (e: ActivityNotFoundException) {}
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        //What happens after bug button is done.
+        if (requestCode == DEV_EMAIL_RESPONSE){
+            if (resultCode == Activity.RESULT_OK){
+                val emailSentToast = "Bug Report Sent Successfully"
+                val duration = Toast.LENGTH_SHORT
+                val toast = Toast.makeText(applicationContext, emailSentToast, duration)
+                toast.show()
+            }
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

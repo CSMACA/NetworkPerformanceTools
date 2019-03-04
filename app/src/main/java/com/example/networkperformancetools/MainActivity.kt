@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener {
             sendToDev.data = Uri.parse("mailto:")
             with(sendToDev) {
-                putExtra(Intent.EXTRA_EMAIL, Array(1){"official.alanroach@outlook.com"})
+                putExtra(Intent.EXTRA_EMAIL, Array(1) { "netperformancetools@gmail.com" })
                 putExtra(Intent.EXTRA_SUBJECT, "Bug Report")
             }
             try {
@@ -45,6 +45,11 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == DEV_EMAIL_RESPONSE){
             if (resultCode == Activity.RESULT_OK){
                 val emailSentToast = "Bug Report Sent Successfully"
+                val duration = Toast.LENGTH_SHORT
+                val toast = Toast.makeText(applicationContext, emailSentToast, duration)
+                toast.show()
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                val emailSentToast = "Bug Report Not Sent"
                 val duration = Toast.LENGTH_SHORT
                 val toast = Toast.makeText(applicationContext, emailSentToast, duration)
                 toast.show()

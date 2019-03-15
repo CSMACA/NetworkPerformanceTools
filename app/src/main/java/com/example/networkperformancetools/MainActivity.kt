@@ -3,11 +3,13 @@ package com.example.networkperformancetools
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -23,6 +25,18 @@ class MainActivity : AppCompatActivity() {
 
         bugButton()
 
+        var screenOrientation = resources.configuration.orientation
+        if (screenOrientation == Configuration.ORIENTATION_PORTRAIT) {
+            hideSidePanel()
+        }
+
+    }
+
+    private fun hideSidePanel() {
+        var sidePane = findViewById<View>(R.id.side_panel)
+        if (sidePane.visibility == View.VISIBLE) {
+            sidePane.visibility = View.GONE
+        }
     }
 
     private fun bugButton(){
@@ -76,5 +90,4 @@ class MainActivity : AppCompatActivity() {
 
         return super.onOptionsItemSelected(item)
     }
-
 }

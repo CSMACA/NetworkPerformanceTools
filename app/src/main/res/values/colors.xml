@@ -4,7 +4,6 @@
 
 	or
 
-
 *** Primary color:
 
    shade 0 = #FF4900 = rgb(255, 73,  0) = rgba(255, 73,  0,1) = rgb0(1,0.286,0)
@@ -34,9 +33,16 @@
     <!-- LIGHT THEME -->
     <color name="colorPrimary">#FF4900</color>
     <color name="colorPrimaryDark">#BC3600</color>
+
+    <color name="colorSecondary">#FF9200</color>
+    <color name="colorSecondaryDark">#BC6C00</color>
+
+    <color name="colorTertiary">#EF0048</color>
+    <color name="colorTertiaryDark">#A80033</color>
+
     <color name="colorAccent">#F02D68</color>
     <color name="colorAccentRipple">#FF9AE2</color>
-    <color name="colorBackground">#C7BEBE</color>
+    <color name="colorBackground">#F0F0F0</color>
 
     <!-- DARK THEME -->
     <color name="colorPrimaryD">#464646</color>

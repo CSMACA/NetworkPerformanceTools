@@ -26,7 +26,9 @@
                 android:layout_weight="1"
                 android:background="?attr/colorPrimary"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:layout_scrollFlags="scroll|enterAlways" android:visibility="invisible"/>
+                app:layout_scrollFlags="scroll|enterAlways" android:visibility="invisible">
+
+        </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -35,7 +37,7 @@
               android:layout_alignParentStart="true"
               class="com.example.networkperformancetools.MainPanelFragment" tools:layout="@layout/fragment_main_panel"/>
 
-    <fragment android:layout_width="match_parent" android:layout_height="match_parent"
+    <fragment android:layout_width="150dp" android:layout_height="match_parent"
               android:id="@+id/side_panel"
               android:layout_alignParentStart="true"
               class="com.example.networkperformancetools.SidePanelFragment" tools:layout="@layout/fragment_side_panel"/>

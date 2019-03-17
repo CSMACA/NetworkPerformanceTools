@@ -25,17 +25,17 @@ class MainActivity : AppCompatActivity() {
 
         bugButton()
 
-        var screenOrientation = resources.configuration.orientation
-        if (screenOrientation == Configuration.ORIENTATION_PORTRAIT) {
-            hideSidePanel()
+        val screenOrientation = resources.configuration.orientation
+        if (screenOrientation == Configuration.ORIENTATION_LANDSCAPE) {
+            showSidePanel()
         }
 
     }
 
-    private fun hideSidePanel() {
-        var sidePane = findViewById<View>(R.id.side_panel)
-        if (sidePane.visibility == View.VISIBLE) {
-            sidePane.visibility = View.GONE
+    private fun showSidePanel() {
+        val sidePane = findViewById<View>(R.id.side_panel)
+        if (sidePane.visibility == View.GONE) {
+            sidePane.visibility = View.VISIBLE
         }
     }
 

@@ -5,9 +5,8 @@
     <string name="title_activity_settings">Settings</string>
     <string name="pingButtonText">Ping [8.8.8.8]</string>
 
-    <!-- Strings related to Settings -->
+    <string name="action_search">Search</string>
 
-    <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
     <string name="pref_title_social_recommendations">Enable social recommendations</string>

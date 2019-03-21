@@ -3,19 +3,22 @@ package com.example.networkperformancetools
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.content.res.Configuration
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
 
 const val DEV_EMAIL_RESPONSE = 1
 
 class MainActivity : AppCompatActivity() {
+    //val timeReg = Regex("""(?=time)\w+""", RegexOption.IGNORE_CASE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,21 +27,21 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         bugButton()
-
-        val screenOrientation = resources.configuration.orientation
-        if (screenOrientation == Configuration.ORIENTATION_LANDSCAPE) {
-            showSidePanel()
-        }
+        pingButton()
 
     }
 
-    private fun showSidePanel() {
-        val sidePane = findViewById<View>(R.id.side_panel)
-        if (sidePane.visibility == View.GONE) {
-            sidePane.visibility = View.VISIBLE
+    private fun pingButton() {
+        pingButton.setOnClickListener {
+            pingOutput(ping("www.google.com"))
         }
     }
 
+    private fun pingOutput(str: String) {
+        val pingText = findViewById<TextView>(R.id.pingOut)
+
+        pingText.text = str
+    }
     private fun bugButton(){
         //Handles bug report button.
         val sendToDev = Intent(Intent.ACTION_SENDTO)
@@ -89,5 +92,39 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun ping(url: String): String {
+        var str = ""
+        try {
+            val process = Runtime.getRuntime().exec(
+                "/system/bin/ping -c 8 $url"
+            )
+            val reader = BufferedReader(
+                InputStreamReader(
+                    process.inputStream
+                )
+            )
+            val buffer = CharArray(256)
+            val output = StringBuffer()
+
+            reader.read(buffer)
+
+            for (char in buffer) {
+                output.append(char)
+            }
+
+            reader.close()
+
+
+
+            str = output.toString()
+            val temp = str.split("=")
+            str = temp[temp.count() - 1]
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return str
     }
 }

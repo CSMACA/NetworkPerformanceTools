@@ -18,7 +18,6 @@ import java.io.InputStreamReader
 const val DEV_EMAIL_RESPONSE = 1
 
 class MainActivity : AppCompatActivity() {
-    //val timeReg = Regex("""(?=time)\w+""", RegexOption.IGNORE_CASE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,49 +28,6 @@ class MainActivity : AppCompatActivity() {
         bugButton()
         pingButton()
 
-    }
-
-    private fun pingButton() {
-        pingButton.setOnClickListener {
-            pingOutput(ping("www.google.com"))
-        }
-    }
-
-    private fun pingOutput(str: String) {
-        val pingText = findViewById<TextView>(R.id.pingOut)
-
-        pingText.text = str
-    }
-    private fun bugButton(){
-        //Handles bug report button.
-        val sendToDev = Intent(Intent.ACTION_SENDTO)
-        fab.setOnClickListener {
-            sendToDev.data = Uri.parse("mailto:")
-            with(sendToDev) {
-                putExtra(Intent.EXTRA_EMAIL, Array(1) { "netperformancetools@gmail.com" })
-                putExtra(Intent.EXTRA_SUBJECT, "Bug Report")
-            }
-            try {
-                startActivityForResult(sendToDev, DEV_EMAIL_RESPONSE)
-            } catch (e: ActivityNotFoundException) {}
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //What happens after bug button is done.
-        if (requestCode == DEV_EMAIL_RESPONSE){
-            if (resultCode == Activity.RESULT_OK){
-                val emailSentToast = "Bug Report Sent Successfully"
-                val duration = Toast.LENGTH_SHORT
-                val toast = Toast.makeText(applicationContext, emailSentToast, duration)
-                toast.show()
-            } else if (resultCode == Activity.RESULT_CANCELED) {
-                val emailSentToast = "Bug Report Not Sent"
-                val duration = Toast.LENGTH_SHORT
-                val toast = Toast.makeText(applicationContext, emailSentToast, duration)
-                toast.show()
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -94,6 +50,42 @@ class MainActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
+    // Bug Button Stuff
+
+    private fun bugButton() {
+        //Handles bug report button.
+        val sendToDev = Intent(Intent.ACTION_SENDTO)
+        fab.setOnClickListener {
+            sendToDev.data = Uri.parse("mailto:")
+            with(sendToDev) {
+                putExtra(Intent.EXTRA_EMAIL, Array(1) { "netperformancetools@gmail.com" })
+                putExtra(Intent.EXTRA_SUBJECT, "Bug Report")
+            }
+            try {
+                startActivityForResult(sendToDev, DEV_EMAIL_RESPONSE)
+            } catch (e: ActivityNotFoundException) {
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        //What happens after bug button is done.
+        if (requestCode == DEV_EMAIL_RESPONSE) {
+            if (resultCode == Activity.RESULT_OK) {
+                val emailSentToast = "Bug Report Sent Successfully"
+                val duration = Toast.LENGTH_SHORT
+                val toast = Toast.makeText(applicationContext, emailSentToast, duration)
+                toast.show()
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                val emailSentToast = "Bug Report Not Sent"
+                val duration = Toast.LENGTH_SHORT
+                val toast = Toast.makeText(applicationContext, emailSentToast, duration)
+                toast.show()
+            }
+        }
+    }
+
+    // Ping Stuff
     private fun ping(url: String): String {
         var str = ""
         try {
@@ -127,4 +119,27 @@ class MainActivity : AppCompatActivity() {
         }
         return str
     }
+
+    private fun pingButton() {
+        pingButton.setOnClickListener {
+            pingOutput(ping("www.google.com"))
+        }
+    }
+
+    private fun pingOutput(str: String) {
+        val pingText = findViewById<TextView>(R.id.pingOut)
+
+        pingText.text = str
+    }
+
+    /*
+    Implement text input for address to ping.
+
+    For loop {
+     sufficiently high number
+     so that looping over loop takes 5 or 10 seconds
+     every tick I take a new ping value, update the UI thread
+    }
+
+     */
 }

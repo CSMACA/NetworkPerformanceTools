@@ -167,4 +167,5 @@
     </string>
 
     <string name="uploadText">Check Upload Speed</string>
+    <string name="pingTabText">Ping</string>
 </resources>

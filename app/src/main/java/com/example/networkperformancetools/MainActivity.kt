@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -13,7 +14,6 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
 const val DEV_EMAIL_RESPONSE = 1
@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity(),
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(tabLayoutViewPager))
 
         bugButton()
+        pingButton()
 
     }
 
@@ -84,15 +85,15 @@ class MainActivity : AppCompatActivity(),
         //What happens after bug button is done.
         if (requestCode == DEV_EMAIL_RESPONSE) {
             if (resultCode == Activity.RESULT_OK) {
-                val emailSentToast = "Bug Report Sent Successfully"
-                val duration = Toast.LENGTH_SHORT
-                val toast = Toast.makeText(applicationContext, emailSentToast, duration)
-                toast.show()
+                val emailSentSnackbar = "Bug Report Sent Successfully"
+                val duration = Snackbar.LENGTH_LONG
+                val snackbar = Snackbar.make(main_content, emailSentSnackbar, duration)
+                snackbar.show()
             } else if (resultCode == Activity.RESULT_CANCELED) {
-                val emailSentToast = "Bug Report Not Sent"
-                val duration = Toast.LENGTH_SHORT
-                val toast = Toast.makeText(applicationContext, emailSentToast, duration)
-                toast.show()
+                val emailNotSentSnackbar = "Bug Report Not Sent"
+                val duration = Snackbar.LENGTH_LONG
+                val snackbar = Snackbar.make(main_content, emailNotSentSnackbar, duration)
+                snackbar.show()
             }
         }
     }
@@ -109,13 +110,14 @@ class MainActivity : AppCompatActivity(),
 
      */
 
+    //Setup and manage fragments over tabs.
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
-            var fragment: Fragment = PingTabFragment()
+            var fragment: Fragment = TraceTabFragment()
 
             when (position) {
-                0 -> fragment = PingTabFragment()
+                0 -> fragment = PingTabFragment()      //Use .newInstance(param1, param2) if possibly for each fragment.
                 1 -> fragment = TraceTabFragment()
                 2 -> fragment = SpeedTab()
             }
@@ -132,6 +134,5 @@ class MainActivity : AppCompatActivity(),
 
     override fun onAttachFragment(fragment: Fragment?) = Unit
     override fun onFragmentInteraction(uri:Uri) = Unit
-
 
 }

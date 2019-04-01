@@ -7,11 +7,6 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,7 +31,6 @@ class PingTabFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        pingButton()
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -104,50 +98,5 @@ class PingTabFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
-
-    private fun ping(url: String): String {
-        var str = ""
-        try {
-            val process = Runtime.getRuntime().exec(
-                "/system/bin/ping -c 8 $url"
-            )
-            val reader = BufferedReader(
-                InputStreamReader(
-                    process.inputStream
-                )
-            )
-            val buffer = CharArray(256)
-            val output = StringBuffer()
-
-            reader.read(buffer)
-
-            for (char in buffer) {
-                output.append(char)
-            }
-
-            reader.close()
-
-            str = output.toString()
-            val temp = str.split("=")
-            str = temp[temp.count() - 1]
-
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return str
-    }
-
-    private fun pingButton() {
-        val pingButton = view?.findViewById<Button>(R.id.pingButton)
-        pingButton?.setOnClickListener {
-            pingOutput(ping("www.google.com"))
-        }
-    }
-
-    private fun pingOutput(str: String) {
-        val pingText = view?.findViewById<TextView>(R.id.pingOut)
-
-        pingText?.text = str
     }
 }

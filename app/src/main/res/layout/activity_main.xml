@@ -13,9 +13,9 @@
         tools:context=".MainActivity">
 
     <android.support.design.widget.TabLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tabLayout" app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/tabs" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/appbar">
 
@@ -23,20 +23,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pingTabText"
-        />
+                android:id="@+id/pingTabTab"/>
 
         <android.support.design.widget.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tuesday"
-        />
+                android:text="@string/trace"
+                android:id="@+id/traceTabTab"/>
 
         <android.support.design.widget.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Wednesday"
-        />
+                android:text="@string/speed"
+                android:id="@+id/speedTabTab"/>
     </android.support.design.widget.TabLayout>
+    <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="555dp"
+            android:id="@+id/tabLayoutViewPager"
+            app:layout_constraintTop_toBottomOf="@+id/tabs"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
     <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
             android:layout_width="0dp"
@@ -70,20 +77,5 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.954"
             android:layout_marginBottom="32dp" app:layout_constraintBottom_toBottomOf="parent"/>
-
-    <Button
-            android:text="@string/pingButtonText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:id="@+id/pingButton"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="160dp"
-            android:layout_marginTop="32dp" app:layout_constraintTop_toBottomOf="@+id/tabLayout"/>
-
-    <TextView
-            android:text=""
-            android:layout_width="138dp"
-            android:layout_height="wrap_content" android:id="@+id/pingOut"
-            android:textSize="@dimen/TextViewMasterSize"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/pingButton"/>
 
 </android.support.constraint.ConstraintLayout>

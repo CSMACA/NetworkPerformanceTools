@@ -1,32 +1,45 @@
 package com.example.networkperformancetools
 
+
 import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
 
 const val DEV_EMAIL_RESPONSE = 1
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),
+    PingTabFragment.OnFragmentInteractionListener,
+    TraceTabFragment.OnFragmentInteractionListener,
+    SpeedTab.OnFragmentInteractionListener {
+
+    private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         setSupportActionBar(toolbar)
 
+        // Create the adapter that will return a fragment for each of the three
+        // primary sections of the activity.
+        mSectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
+
+        tabLayoutViewPager.adapter = mSectionsPagerAdapter
+
+        tabLayoutViewPager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(tabs))
+        tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(tabLayoutViewPager))
+
         bugButton()
-        pingButton()
 
     }
 
@@ -51,7 +64,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Bug Button Stuff
-
     private fun bugButton() {
         //Handles bug report button.
         val sendToDev = Intent(Intent.ACTION_SENDTO)
@@ -85,52 +97,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Ping Stuff
-    private fun ping(url: String): String {
-        var str = ""
-        try {
-            val process = Runtime.getRuntime().exec(
-                "/system/bin/ping -c 8 $url"
-            )
-            val reader = BufferedReader(
-                InputStreamReader(
-                    process.inputStream
-                )
-            )
-            val buffer = CharArray(256)
-            val output = StringBuffer()
-
-            reader.read(buffer)
-
-            for (char in buffer) {
-                output.append(char)
-            }
-
-            reader.close()
-
-
-
-            str = output.toString()
-            val temp = str.split("=")
-            str = temp[temp.count() - 1]
-
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return str
-    }
-
-    private fun pingButton() {
-        pingButton.setOnClickListener {
-            pingOutput(ping("www.google.com"))
-        }
-    }
-
-    private fun pingOutput(str: String) {
-        val pingText = findViewById<TextView>(R.id.pingOut)
-
-        pingText.text = str
-    }
 
     /*
     Implement text input for address to ping.
@@ -142,4 +108,30 @@ class MainActivity : AppCompatActivity() {
     }
 
      */
+
+    inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+
+        override fun getItem(position: Int): Fragment {
+            var fragment: Fragment = PingTabFragment()
+
+            when (position) {
+                0 -> fragment = PingTabFragment()
+                1 -> fragment = TraceTabFragment()
+                2 -> fragment = SpeedTab()
+            }
+
+            return fragment
+
+        }
+
+        override fun getCount(): Int {
+            // Show 3 total pages.
+            return 3
+        }
+    }
+
+    override fun onAttachFragment(fragment: Fragment?) = Unit
+    override fun onFragmentInteraction(uri:Uri) = Unit
+
+
 }

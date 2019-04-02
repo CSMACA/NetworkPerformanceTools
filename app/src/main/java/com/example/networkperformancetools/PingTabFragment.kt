@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,7 +25,8 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  *
  */
-class PingTabFragment : Fragment() {
+class PingTabFragment : Fragment(), View.OnClickListener {
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,12 +38,18 @@ class PingTabFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val bttn = view?.findViewById<Button>(R.id.pingButton)
+        bttn?.setOnClickListener(this)
+
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_ping_tab, container, false)
     }
@@ -55,7 +64,7 @@ class PingTabFragment : Fragment() {
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException("$context must implement OnFragmentInteractionListener")
         }
     }
 
@@ -98,5 +107,17 @@ class PingTabFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.pingButton -> {
+                val tView = view?.findViewById<TextView>(R.id.pingOut)
+
+                tView?.text = getString(R.string.pleaseGod)
+
+            }
+            else ->{}
+        }
     }
 }

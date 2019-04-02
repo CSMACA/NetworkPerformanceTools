@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Trace
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
@@ -27,6 +29,10 @@ class MainActivity : AppCompatActivity(),
     PingTabFragment.OnFragmentInteractionListener,
     TraceTabFragment.OnFragmentInteractionListener,
     SpeedTab.OnFragmentInteractionListener {
+
+    var pFragObj : Fragment? = null
+    var tFragObj : Fragment? = null
+    var sFragObj : Fragment? = null
 
     private var mSectionsPagerAdapter: SectionsPagerAdapter? = null
 
@@ -45,7 +51,6 @@ class MainActivity : AppCompatActivity(),
         tabs.addOnTabSelectedListener(TabLayout.ViewPagerOnTabSelectedListener(tabLayoutViewPager))
 
         bugButton()
-        pingButton()
 
     }
 
@@ -122,7 +127,7 @@ class MainActivity : AppCompatActivity(),
             var fragment: Fragment = TraceTabFragment()
 
             when (position) {
-                0 -> fragment = PingTabFragment()      //Use .newInstance(param1, param2) if possibly for each fragment.
+                0 -> fragment = PingTabFragment()      //Use .newInstance(param1, param2) if possible for each fragment.
                 1 -> fragment = TraceTabFragment()
                 2 -> fragment = SpeedTab()
             }
@@ -141,7 +146,7 @@ class MainActivity : AppCompatActivity(),
     override fun onFragmentInteraction(uri:Uri) = Unit
 
     //Ping Tab Fragment Program Things
-    private fun ping(url: String): String {
+    fun ping(url: String): String {
         var str = ""
         try {
             val process = Runtime.getRuntime().exec(
@@ -171,18 +176,6 @@ class MainActivity : AppCompatActivity(),
             e.printStackTrace()
         }
         return str
-    }
-
-    private fun pingButton() {
-        val pingButton = findViewById<Button>(R.id.pingButton)
-        pingButton.setOnClickListener {
-            pingOutput(ping("www.google.com"))
-        }
-    }
-
-    private fun pingOutput(str: String) {
-        val pingOut = findViewById<TextView>(R.id.pingOut)
-        pingOut.text = str
     }
 
 }

@@ -6,7 +6,6 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Trace
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
@@ -15,13 +14,7 @@ import android.support.v4.app.FragmentPagerAdapter
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
 
 const val DEV_EMAIL_RESPONSE = 1
 
@@ -124,7 +117,7 @@ class MainActivity : AppCompatActivity(),
     inner class SectionsPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
-            var fragment: Fragment = TraceTabFragment()
+            var fragment: Fragment = PingTabFragment()
 
             when (position) {
                 0 -> fragment = PingTabFragment()      //Use .newInstance(param1, param2) if possible for each fragment.
@@ -145,37 +138,5 @@ class MainActivity : AppCompatActivity(),
     override fun onAttachFragment(fragment: Fragment?) = Unit
     override fun onFragmentInteraction(uri:Uri) = Unit
 
-    //Ping Tab Fragment Program Things
-    fun ping(url: String): String {
-        var str = ""
-        try {
-            val process = Runtime.getRuntime().exec(
-                "/system/bin/ping -c 8 $url"
-            )
-            val reader = BufferedReader(
-                InputStreamReader(
-                    process.inputStream
-                )
-            )
-            val buffer = CharArray(256)
-            val output = StringBuffer()
-
-            reader.read(buffer)
-
-            for (char in buffer) {
-                output.append(char)
-            }
-
-            reader.close()
-
-            str = output.toString()
-            val temp = str.split("=")
-            str = temp[temp.count() - 1]
-
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-        return str
-    }
 
 }

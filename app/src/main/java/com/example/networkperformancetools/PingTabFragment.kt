@@ -10,8 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import kotlinx.android.synthetic.main.fragment_ping_tab.*
-import org.w3c.dom.Text
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -132,8 +130,9 @@ class PingTabFragment : Fragment() {
     }
 
 
+
     //Ping Tab Fragment Program Things
-    fun ping(url: String): String {
+    private fun ping(url: String): String {
         var str = ""
         try {
             val process = Runtime.getRuntime().exec(
@@ -162,7 +161,6 @@ class PingTabFragment : Fragment() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-
         return str
     }
 

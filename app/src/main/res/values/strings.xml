@@ -174,4 +174,6 @@
     <string name="trace">Trace</string>
     <string name="speed">Speed</string>
     <string name="pleaseGod">Maybe this works?</string>
+    <string name="menuFeedbackItem">Feedback</string>
+    <string name="address">Address</string>
 </resources>

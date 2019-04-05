@@ -7,4 +7,5 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="TextViewMasterSize">28sp</dimen>
+    <dimen name="outputTextSize">20sp</dimen>
 </resources>

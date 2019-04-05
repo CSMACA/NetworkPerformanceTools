@@ -77,8 +77,6 @@ class SettingsActivity : AppCompatPreferenceActivity() {
      * This fragment shows general preferences only. It is used when the
      * activity is showing a two-pane settings UI.
      */
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     class GeneralPreferenceFragment : PreferenceFragment() {
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)

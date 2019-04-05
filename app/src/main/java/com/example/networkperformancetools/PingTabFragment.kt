@@ -3,12 +3,15 @@ package com.example.networkperformancetools
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import kotlinx.android.synthetic.main.fragment_ping_tab.*
+import org.w3c.dom.Text
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -60,8 +63,10 @@ class PingTabFragment : Fragment() {
             when (v.id) {
                 R.id.pingButton -> {
                     val tView = view.findViewById<TextView>(R.id.pingOut)
+                    tView?.text = ping(addressInput(view))
 
-                    tView?.text = ping("www.google.com")
+                    val resultView = view.findViewById<TextView>(R.id.resultFor)
+                    resultView.text = addressInput(view)
 
                 }
                 else -> {
@@ -159,6 +164,11 @@ class PingTabFragment : Fragment() {
         }
 
         return str
+    }
+
+    fun addressInput(v: View) : String{
+        val addressTextView = v.findViewById<TextInputEditText>(R.id.addressInText)
+        return addressTextView.text.toString()
     }
 
 }

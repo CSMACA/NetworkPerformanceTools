@@ -130,8 +130,9 @@ class PingTabFragment : Fragment() {
     }
 
 
+
     //Ping Tab Fragment Program Things
-    fun ping(url: String): String {
+    private fun ping(url: String): String {
         var str = ""
         try {
             val process = Runtime.getRuntime().exec(
@@ -160,7 +161,6 @@ class PingTabFragment : Fragment() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-
         return str
     }
 

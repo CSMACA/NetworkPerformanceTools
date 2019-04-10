@@ -10,8 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import kotlinx.android.synthetic.main.fragment_ping_tab.*
-import org.w3c.dom.Text
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -155,7 +153,7 @@ class PingTabFragment : Fragment() {
 
             reader.close()
 
-            str = output.toString()
+            str = output.toString().trim()
             val temp = str.split("=")
             str = temp[temp.count() - 1]
 

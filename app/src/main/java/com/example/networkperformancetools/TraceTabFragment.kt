@@ -3,10 +3,16 @@ package com.example.networkperformancetools
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -43,6 +49,25 @@ class TraceTabFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_trace_tab, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val bttn = view.findViewById<Button>(R.id.traceButton)
+
+        bttn?.setOnClickListener { v ->
+            when (v.id) {
+                R.id.traceButton -> {
+                    val tView = view.findViewById<TextView>(R.id.traceOutput)
+                    tView?.text = trace(addressInput(view))
+
+//                    val resultView = view.findViewById<TextView>(R.id.resultFor)
+//                    resultView.text = addressInput(view)
+
+                }
+                else -> {
+                }
+            }
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -98,5 +123,41 @@ class TraceTabFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    fun trace(url: String): String {
+        var str = ""
+        try {
+            val process = Runtime.getRuntime().exec(
+                "for i in {1..30}; do ping -t \$i -c 1 google.com; done | grep \"Time to live exceeded\" $url"
+            )
+            val reader = BufferedReader(
+                InputStreamReader(
+                    process.inputStream
+                )
+            )
+            val buffer = CharArray(256)
+            val output = StringBuffer()
+
+            reader.read(buffer)
+
+            for (char in buffer) {
+                output.append(char)
+            }
+
+            reader.close()
+
+            str = output.toString().trim()
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+
+        return str
+    }
+
+    fun addressInput(v: View) : String{
+        val addressTextView = v.findViewById<TextInputEditText>(R.id.addressInText)
+        return addressTextView.text.toString()
     }
 }

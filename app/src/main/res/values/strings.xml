@@ -176,4 +176,5 @@
     <string name="pleaseGod">Maybe this works?</string>
     <string name="menuFeedbackItem">Feedback</string>
     <string name="address">Address</string>
+    <string name="traceButtonText">Trace</string>
 </resources>

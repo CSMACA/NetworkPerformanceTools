@@ -177,4 +177,5 @@
     <string name="menuFeedbackItem">Feedback</string>
     <string name="address">Address</string>
     <string name="traceButtonText">Trace</string>
+    <string name="title_activity_connection_class">ConnectionClassActivity</string>
 </resources>

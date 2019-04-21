@@ -164,7 +164,7 @@ class PingTabFragment : Fragment() {
         return str
     }
 
-    fun addressInput(v: View) : String{
+    private fun addressInput(v: View): String {
         val addressTextView = v.findViewById<TextInputEditText>(R.id.addressInText)
         return addressTextView.text.toString()
     }

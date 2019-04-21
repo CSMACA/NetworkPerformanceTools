@@ -70,17 +70,13 @@ class TraceTabFragment : Fragment() {
         }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    fun onButtonPressed(uri: Uri) {
-        listener?.onFragmentInteraction(uri)
-    }
-
+    @Throws(RuntimeException::class)
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
-            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
+            throw RuntimeException("$context must implement OnFragmentInteractionListener")
         }
     }
 
@@ -125,7 +121,7 @@ class TraceTabFragment : Fragment() {
             }
     }
 
-    fun trace(url: String): String {
+    private fun trace(url: String): String {
         var str = ""
         try {
             val process = Runtime.getRuntime().exec(
@@ -156,7 +152,7 @@ class TraceTabFragment : Fragment() {
         return str
     }
 
-    fun addressInput(v: View) : String{
+    private fun addressInput(v: View): String {
         val addressTextView = v.findViewById<TextInputEditText>(R.id.addressInText)
         return addressTextView.text.toString()
     }

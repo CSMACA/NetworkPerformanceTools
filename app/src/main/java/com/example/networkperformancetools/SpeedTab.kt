@@ -1,12 +1,15 @@
 package com.example.networkperformancetools
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import kotlinx.android.synthetic.main.fragment_speed_tab.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -43,6 +46,21 @@ class SpeedTab : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_speed_tab, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val secretsButton = view.findViewById<Button>(R.id.launchConnectionActivity)
+        secretsButton.setOnClickListener { v ->
+            when (v.id) {
+                R.id.launchConnectionActivity -> {
+                    val intent = Intent(activity, launchConnectionActivity::class.java)
+                    startActivity(intent)
+                }
+                else -> {
+                }
+            }
+        }
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -2,6 +2,7 @@ package com.example.networkperformancetools
 
 import android.content.Context
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import java.io.BufferedReader
 import java.io.IOException
@@ -61,11 +63,38 @@ class PingTabFragment : Fragment() {
             when (v.id) {
                 R.id.pingButton -> {
                     val tView = view.findViewById<TextView>(R.id.pingOut)
-                    tView?.text = ping(addressInput(view))
-
                     val resultView = view.findViewById<TextView>(R.id.resultFor)
-                    resultView.text = addressInput(view)
+                    val pBar = view.findViewById<ProgressBar>(R.id.pBar)
 
+                    var tempP : String = ""
+                    var tempA : String = ""
+
+                    object : AsyncTask<Void, String, Void>() {
+                        override fun onPreExecute() {
+                            super.onPreExecute()
+                            pBar.visibility = View.VISIBLE
+                        }
+                        override fun onPostExecute(aVoid: Void?) {
+                            super.onPostExecute(aVoid)
+                            pBar.visibility= View.GONE
+
+                            tView?.text = tempP
+                            resultView.text = tempA
+
+                        }
+
+//                        override fun onProgressUpdate(vararg values: String?) {
+//                            super.onProgressUpdate(*values)
+//
+//                        }
+
+                        override fun doInBackground(vararg params: Void): Void? {
+                            tempP = ping(addressInput(view))
+                            tempA = addressInput(view)
+                            return null
+                        }
+
+                    }.execute()
                 }
                 else -> {
                 }

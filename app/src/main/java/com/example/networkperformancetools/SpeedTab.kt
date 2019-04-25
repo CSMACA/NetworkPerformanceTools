@@ -53,7 +53,7 @@ class SpeedTab : Fragment() {
         secretsButton.setOnClickListener { v ->
             when (v.id) {
                 R.id.launchConnectionActivity -> {
-                    val intent = Intent(activity, launchConnectionActivity::class.java)
+                    val intent = Intent(context, launchConnectionActivity::class.java)
                     startActivity(intent)
                 }
                 else -> {

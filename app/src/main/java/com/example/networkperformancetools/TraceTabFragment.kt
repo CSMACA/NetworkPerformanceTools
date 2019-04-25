@@ -2,18 +2,20 @@ package com.example.networkperformancetools
 
 import android.content.Context
 import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.design.widget.TextInputEditText
 import android.support.v4.app.Fragment
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.TextView
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
-
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,6 +36,7 @@ class TraceTabFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
+    private var setText = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,17 +55,45 @@ class TraceTabFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val bttn = view.findViewById<Button>(R.id.traceButton)
 
+        val tView = view.findViewById<TextView>(R.id.traceOutput)
+        val pBar = view.findViewById<ProgressBar>(R.id.progressBarTrace)
+
+        tView.movementMethod = ScrollingMovementMethod()
+
+
+        val bttn = view.findViewById<Button>(R.id.traceButton)
         bttn?.setOnClickListener { v ->
             when (v.id) {
                 R.id.traceButton -> {
-                    val tView = view.findViewById<TextView>(R.id.traceOutput)
-                    tView?.text = trace(addressInput(view))
+                    object : AsyncTask<Void, String, Void>() {
+                        override fun onPreExecute() {
+                            super.onPreExecute()
+                            pBar.visibility = View.VISIBLE
+                        }
+                        override fun onPostExecute(aVoid: Void?) {
+                            super.onPostExecute(aVoid)
+                            pBar.visibility= View.GONE
+                        }
 
-//                    val resultView = view.findViewById<TextView>(R.id.resultFor)
-//                    resultView.text = addressInput(view)
+                        override fun onProgressUpdate(vararg values: String?) {
+                            super.onProgressUpdate(*values)
+                            tView?.text = setText
+                        }
 
+                        override fun doInBackground(vararg params: Void): Void? {
+
+                            for (i in 1..15) {
+                                if (i == 1){
+                                    setText = trace(addressInput(view), i)
+                                } else {
+                                    setText += (trace(addressInput(view), i))
+                                }
+                                publishProgress(setText)
+                            }
+                            return null
+                        }
+                    }.execute()
                 }
                 else -> {
                 }
@@ -121,18 +152,18 @@ class TraceTabFragment : Fragment() {
             }
     }
 
-    private fun trace(url: String): String {
+    private fun trace(url: String, iterator: Int): String {
         var str = ""
         try {
             val process = Runtime.getRuntime().exec(
-                "for i in {1..30}; do ping -t \$i -c 1 google.com; done | grep \"Time to live exceeded\" $url"
+                "ping -t $iterator -c 1 -U $url"
             )
             val reader = BufferedReader(
                 InputStreamReader(
                     process.inputStream
                 )
             )
-            val buffer = CharArray(256)
+            val buffer = CharArray(512)
             val output = StringBuffer()
 
             reader.read(buffer)
@@ -149,11 +180,11 @@ class TraceTabFragment : Fragment() {
             e.printStackTrace()
         }
 
-        return str
+        return "$str\n"
     }
 
     private fun addressInput(v: View): String {
         val addressTextView = v.findViewById<TextInputEditText>(R.id.addressInText)
-        return addressTextView.text.toString()
+        return addressTextView.text.toString().trim()
     }
 }
